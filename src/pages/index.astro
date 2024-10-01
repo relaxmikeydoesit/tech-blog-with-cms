@@ -1,16 +1,44 @@
 ---
+import PrimaryLayout from "../layouts/PrimaryLayout.astro";
+import FeaturedArticle from "../components/FeaturedArticle.astro";
+import PopularArticles from "../components/PopularArticles.astro";
+
+import fetchArticles from "../lib/fetchArticles";
+
+const newArticles = await fetchArticles({count:3});
+const taggedArticles = await fetchArticles({tagged:true});
+
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<PrimaryLayout>
+	<div class="three-columns mbe-xl">
+		<FeaturedArticle class="span-2" />
+	
+		<div class="inverted">
+			<h2>New</h2>
+			<ul role="list" class="seperated-list"></ul>
+				{
+					taggedArticles.map((article) => (
+					<li>
+						<article class="flow">
+							<h3>
+								<a class="link-title" href={`/article/${article.data.slug}`}>{article.data.title}</a></h3>
+								<p>{article.data.summary}</p>
+								<span class="south-border"></span>
+						</article>
+					</li>
+					))
+				}
+			
+			
+			
+			
+		</div>
+	
+	</div>
+	<PopularArticles class="three-columns mbe-xl" />
+	 <h2>
+
+	 </h2>
+</PrimaryLayout>

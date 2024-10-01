@@ -1,0 +1,123 @@
+<script>
+const navToggle = document.querySelector('[aria-controls="primary-nav"]');
+
+navToggle.addEventListener('click', () => {
+const navOpened = navToggle.getAttribute('aria-expanded')
+    if (navOpened === 'false') {
+        navToggle.setAttribute("aria-expanded", 'true');
+    } else {
+        navToggle.setAttribute("aria-expanded", 'false');
+    }
+})
+</script>
+
+<header>
+    <h1 class="visually-hidden">W.</h1>
+
+    <a href="/" class="logo">
+        <img src="/images/logo.svg" alt="w logo">
+    </a>
+
+
+    <button aria-controls="primary-nav" aria-expanded="false">
+        <span class="visually-hidden">Menu</span>
+        <img class="icon-hamburger" src="images/icon-menu.svg" alt="">
+        <img class="icon-close" src="images/icon-menu-close.svg" alt="">
+    </button>
+    <nav id="primary-nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="https://mikeylee.xyz">MikeyLee.xyz</a></li>
+            <li><a href="https://github.com/relaxmikeydoesit">Github</a></li>
+        
+        </ul>
+    </nav>
+</header>
+
+<style>
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        margin-block: 
+        clamp(1.5rem, 5vmax, 5rem)
+        clamp(1.5rem, 5vmax, 2rem);
+    }
+   
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        
+    }
+    li a {
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 0 18px;
+        color: hsl(240, 100%, 5%);
+    }
+    li a:hover {
+        color: hsl(5, 85%, 63%);
+
+    }
+    button {
+        display: none;
+    }
+    
+
+    @media (width < 750px) {
+        button {
+            display: block;
+            position: absolute;
+            z-index: 10;
+            right: 1rem;
+            padding: 1rem;
+            background: transparent;
+            border: 0;
+
+            .icon-close {
+                display: none;
+            }
+
+            /* span {
+                position: absolute;
+                top: 0;
+            } */
+        }
+        nav {
+            display: none;
+        }
+
+        [aria-expanded="true"] {
+         .icon-hamburger {
+                display: none;
+            }
+            .icon-close {
+                display: block;
+            }
+        }
+
+        [aria-expanded="true"]  + nav {
+           display: block;
+           position: absolute;
+           inset: 0;
+           width: 80%;
+           margin-left: auto;
+           z-index: 1;
+            color: var(--clr-neutral-900);
+            background-color: var(--clr-neutral-100);
+            box-shadow: 0 0 0 100vmax hsl(0 0 0 / .3);
+
+            ul {
+                margin-top: 20dvh;
+                display: grid;
+                gap: 2rem;
+                
+                a {
+                font-size: 2.5rem;
+            }
+        }
+    }
+</style>

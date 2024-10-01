@@ -1,0 +1,69 @@
+---
+import fetchArticles from "../lib/fetchArticles";
+const { class: className } = Astro.props;
+
+const articles = await fetchArticles({count: 3});
+---
+<h2 class="visually-hidden">Popular Articles</h2>
+<ul role="list" class:list={className}>
+    {
+        articles.map((article) => (
+       <li>
+        <article>
+            <img src={article.data.image} alt="">
+            <div>
+                <h3><a href={`/article/${article.data.slug}`}>{article.data.title}</a></h3>
+                <p>{article.data.summary}</p>
+            </div>
+        </article>
+        </li>
+        ))
+        }
+    
+  
+</ul>
+
+<style>
+    article {
+        padding-top: 10px;
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 100px auto;
+    }
+    .btm-spacing {
+
+    }
+
+
+    ul {
+        counter-reset: article-count;
+    }
+
+    li {
+        counter-increment: article-count;
+    }
+
+    h3::before {
+        content: counter(article-count, decimal-leading-zero);
+        font-weight: 700;
+        display: block;
+        color: var(--clr-accent);
+        font-size: 1.5em;
+        margin-bottom: 12px;
+    }
+
+    a  {
+        text-decoration: none;
+        color: var(--clr-neutral-900);
+        
+    }
+    a:hover {
+        color: var(--clr-accent);
+    }
+    p {
+        font-size: 16px;
+        /* font-size: 14px; */
+        margin: 10px auto;
+        line-height: normal;
+    }
+</style>
